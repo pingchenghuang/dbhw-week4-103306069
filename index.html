@@ -17,7 +17,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">臺北市離家出走資訊</a>
+          <a class="navbar-brand" href="#">臺北離家出走資訊</a>
         </div>
       </div>
     </nav>
@@ -28,24 +28,25 @@
       <div class="container">
         <br>
         <br>
-        <h1>臺北市離家出走資訊</h1>
+        <h1>臺北離家出走資訊</h1>
       </div>
     </div>
 
     <div class="container">
       <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2></h2>
-          <img src="http://friendoprod.blob.core.windows.net/missionpics/images/3836/member/a1c2d99a-aed7-471d-b66b-7c04b72a885f.jpg"class="img-thumbnail">
-          <p>何必每件壯舉都需要理由　伴你去出走
-快活而內疚　不管舉世追究
-願扣上你雙手　自繁華浪處到沙丘</p></p>
-        </div>
+      <div id="content" class="row"></div>
+      <div class="sk-cube-grid">
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
       </div>
-
       <hr>
-
       <footer>
         <p>&copy; 2016 NCCU MIS</p>
       </footer>
@@ -54,11 +55,26 @@
   </body>
   <script type="text/javascript">
     $(document).ready(function() {
-      getData(function(err, result) {
+      getData(function(err, data) {
         if(err) {
           console.log(err);
         } else {
-          console.log(result);
+          var animalList = data.result.results;
+          var HTMLanimalList = animalList.map(function(animal) {
+            var HTMLString = "<div class='col-md-4 drop-"+(Math.round(Math.random()*10000%3)+1)+"'><h2>"+animal.Name+"</h2><img class='img-thumbnail' src='"+animal.ImageName+"'><p><ul class='list-group'>";
+            var items = "";
+            for (var key in animal) {
+              if(key!="_id" && key!="ImageName") {
+                items=items+"<li class='list-group-item'>"+key+":"+animal[key]+"</li>";
+              }
+            }
+            var HTMLString = HTMLString+items+"</ul></p><div>";
+            return HTMLString;
+          });
+          HTMLanimalList.forEach(function(html) {
+            $(html).appendTo("#content");
+          });
+          $('.sk-cube-grid').css('display', 'none');
         }
       });
     });
