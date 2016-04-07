@@ -17,7 +17,7 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">臺北市住宿資訊</a>
+          <a class="navbar-brand" href="#">臺北捷運列車到站站名</a>
         </div>
       </div>
     </nav>
@@ -28,27 +28,25 @@
       <div class="container">
         <br>
         <br>
-        <h1>臺北市住宿資訊</h1>
+        <h1>臺北捷運列車到站站名</h1>
       </div>
     </div>
 
     <div class="container">
+      <!-- Example row of columns -->
       <div id="content" class="row"></div>
       <div class="sk-cube-grid">
-      <div class="sk-cube sk-cube1"></div>
-      <div class="sk-cube sk-cube2"></div>
-      <div class="sk-cube sk-cube3"></div>
-      <div class="sk-cube sk-cube4"></div>
-      <div class="sk-cube sk-cube5"></div>
-      <div class="sk-cube sk-cube6"></div>
-      <div class="sk-cube sk-cube7"></div>
-      <div class="sk-cube sk-cube8"></div>
-      <div class="sk-cube sk-cube9"></div>
-    </div>
+        <div class="sk-cube sk-cube1"></div>
+        <div class="sk-cube sk-cube2"></div>
+        <div class="sk-cube sk-cube3"></div>
+        <div class="sk-cube sk-cube4"></div>
+        <div class="sk-cube sk-cube5"></div>
+        <div class="sk-cube sk-cube6"></div>
+        <div class="sk-cube sk-cube7"></div>
+        <div class="sk-cube sk-cube8"></div>
+        <div class="sk-cube sk-cube9"></div>
       </div>
-
       <hr>
-
       <footer>
         <p>&copy; 2016 NCCU MIS</p>
       </footer>
@@ -56,29 +54,29 @@
 
   </body>
   <script type="text/javascript">
-$(document).ready(function() {
-    getData(function(err, data) {
-        if (err) {
-            console.log(err);
+    $(document).ready(function() {
+      getData(function(err, data) {
+        if(err) {
+          console.log(err);
         } else {
-            var hotelList = data.result.results;
-            var HTMLhotelList = hotelList.map(function(hotel) {
-                var HTMLString = "<div class='col-md-4 drop-" + (Math.round(Math.random() * 10000 % 3) + 1) + "'><h2>" + hotel.stitle+ "</h2><img class='img-thumbnail' src='" + hotel.file + "'><p><ul class='list-group'>";
-                var items = "";
-                for (var key in hotel) {
-                    if (key == "id" || key == "CAT2" || key == "stitle" || key == "MRT" || key == "file" ) {
-                        items = items + "<li class='list-group-item'>" + hotel[key] + "</li>";
-                    }
-                }
-                var HTMLString = HTMLString + items + "</ul></p><div>";
-                return HTMLString;
-            });
-            HTMLanimalList.forEach(function(html) {
-                $(html).appendTo("#content");
-            });
-            $('.sk-cube-grid').css('display', 'none');
+          var hostelList = data.result.results;
+          var HTMLhostelList = hostelList.map(function(hostel) {
+            var HTMLString = "<div class='col-md-4 drop-"+(Math.round(Math.random()*10000%3)+1)+"'><h2>"+hostelList[0]._id+"</h2><p><ul class='list-group'>";
+            var items = "";
+            for (var key in hostelList) {
+              if(key!="_id") {
+                items=items+"<li class='list-group-item'>"+key+":"+hostelList[key]+"</li>";
+              }
+            }
+            var HTMLString = HTMLString+items+"</ul></p><div>";
+            return HTMLString;
+          });
+          HTMLhostelList.forEach(function(html) {
+            $(html).appendTo("#content");
+          });
+          $('.sk-cube-grid').css('display', 'none');
         }
+      });
     });
-});
-</script>
+  </script>
 </html>
