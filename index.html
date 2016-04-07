@@ -61,7 +61,7 @@
     </div> <!-- /container -->
 
   </body>
-  <script type="text/javascript">
+ <script type="text/javascript">
     $(document).ready(function() {
       getData(function(err, data) {
         if(err) {
@@ -69,10 +69,28 @@
         } else {
           var animalList = data.result.results;
           var HTMLanimalList = animalList.map(function(animal) {
-            var HTMLString = "<div class='col-md-4 drop-"+(Math.round(Math.random()*10000%3)+1)+"'><h2>"+animal.Name+"</h2><img class='img-thumbnail' src='"+animal.ImageName+"'><p><ul class='list-group'>";
+             if(animal.file == null) {
+              animal.file = "image/noImage.png";
+            } else if(animal.file.toLowerCase().indexOf(".jpg") != -1) {
+              var jpg = animal.file.toLowerCase().indexOf(".jpg");
+              animal.file = animal.file.substring(0, jpg+4);
+            } else if(animal.file.toLowerCase().indexOf(".gif") != -1) {
+              var gif = animal.file.toLowerCase().indexOf(".gif");
+              animal.file = animal.file.substring(0, gif+4);
+            } else if(animal.file.toLowerCase().indexOf(".bmp") != -1) {
+              var bmp = animal.file.toLowerCase().indexOf(".bmp");
+              animal.file = animal.file.substring(0, bmp+4);
+            } else if(animal.file.indexOf("B0025") != -1) {
+              animal.file = "http://www.travel.taipei/d_upload_ttn/frontsite/tw/hotel/B0025/B0025_28.jpg";
+            } else if(animal.file.toLowerCase().indexOf(".png") != -1) {
+              var png = animal.file.toLowerCase().indexOf(".png");
+              animal.file = animal.file.substring(0, png+4);
+            }
+            
+            var HTMLString = "<div class='col-md-4 drop-"+(Math.round(Math.random()*10000%3)+1)+"'><h2>"+animal.stitle+"</h2><img class='img-thumbnail' src='"+animal.file+"'><p><ul class='list-group'>";
             var items = "";
             for (var key in animal) {
-              if(key!="_id" && key!="ImageName") {
+              if(key!="_id" && key!="file") {
                 items=items+"<li class='list-group-item'>"+key+":"+animal[key]+"</li>";
               }
             }
